@@ -23,7 +23,7 @@ deploy() {
 
     echo "exporting PATH and LIBRARY_PATH" | indent
     PROFILE_PATH="$BUILD_DIR/.profile.d/${package}.sh"
-    echo 'PATH=$PATH:$HOME/vendor/'"$package" > $PROFILE_PATH
+    echo 'PATH=\"$PATH:$HOME/vendor/'"$package"'\"' > $PROFILE_PATH
 }
 
 mkdir -p $BUILD_DIR $CACHE_DIR
@@ -38,4 +38,9 @@ for package in ${PACKAGES[@]}; do
 done
 
 # Fix PATH of gifsicle
-echo 'PATH=$PATH:$HOME/vendor/gifsicle-1.77/src' > $BUILD_DIR/.profile.d/gifsicle-1.77.sh
+echo 'PATH="$PATH:$HOME/vendor/gifsicle-1.77/src"' > $BUILD_DIR/.profile.d/gifsicle-1.77.sh
+
+# Source in all the profile stuff
+for profile in ./.profile.d/*; do
+    . $profile
+done
