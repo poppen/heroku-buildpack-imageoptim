@@ -23,7 +23,7 @@ deploy() {
 
     echo "exporting PATH and LIBRARY_PATH" | indent
     PROFILE_PATH="$BUILD_DIR/.profile.d/${package}.sh"
-    echo 'PATH=\"$PATH:$HOME/vendor/'"$package"'\"' > $PROFILE_PATH
+    echo 'PATH="$PATH:$HOME/vendor/'"$package"'"' > $PROFILE_PATH
 }
 
 mkdir -p $BUILD_DIR $CACHE_DIR
