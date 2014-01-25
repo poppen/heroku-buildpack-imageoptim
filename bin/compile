@@ -45,3 +45,5 @@ for package in ${PACKAGES[@]}; do
     export PATH="$PATH:${BUILD_DIR}/${VENDOR_DIR}/${package}"
 done
 export PATH="$PATH:$HOME/${VENDOR_DIR}/gifsicle-1.77/src"
+
+echo $PATH
