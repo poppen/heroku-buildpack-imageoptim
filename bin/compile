@@ -42,8 +42,8 @@ echo 'PATH="$PATH:$HOME/vendor/gifsicle-1.77/src"' > $BUILD_DIR/.profile.d/gifsi
 
 # add temporary PATH to solve the problem using heroku-buildpack-multi
 for package in ${PACKAGES[@]}; do
-    export PATH="$PATH:${BUILD_DIR}/${VENDOR_DIR}/${package}"
+    export PATH="$PATH:$HOME/vendor/${package}"
 done
-export PATH="$PATH:$HOME/${VENDOR_DIR}/gifsicle-1.77/src"
+export PATH="$PATH:$HOME/vendor/gifsicle-1.77/src"
 
 echo $PATH
