@@ -1,6 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
+set -eo pipefail
 
 BUILD_DIR=$1
+CACHE_DIR=$2
 VENDOR_DIR="vendor"
 
 declare -a PACKAGES=("advancecomp-1.18" "gifsicle-1.77" "jhead-2.97" "libjpeg-turbo-1.3.0" "jpegoptim-1.2.4" "optipng-0.7.4" "pngcrush-1.7.60")
@@ -12,28 +15,27 @@ indent() {
 deploy() {
     package=$1
 
-    echo "-----> Install $package"
+    echo "-----> Installing $package"
     DOWNLOAD_URL="http://poppen.github.io/heroku-binaries/libs/${package}.tar.gz"
 
     echo "DOWNLOAD_URL = " $DOWNLOAD_URL | indent
-
-    cd $BUILD_DIR
-    mkdir -p $VENDOR_DIR
-    cd $VENDOR_DIR
     curl -L --silent $DOWNLOAD_URL | tar xz
 
     echo "exporting PATH and LIBRARY_PATH" | indent
     PROFILE_PATH="$BUILD_DIR/.profile.d/${package}.sh"
-    mkdir -p $(dirname $PROFILE_PATH)
-    echo "creating $PROFILE_PATH" | indent
     echo 'PATH=$PATH:$HOME/vendor/'"$package" > $PROFILE_PATH
 }
+
+mkdir -p $BUILD_DIR $CACHE_DIR
+mkdir -p $BUILD_DIR/.profile.d
+
+cd $BUILD_DIR
+mkdir -p $VENDOR_DIR
+cd $VENDOR_DIR
 
 for package in ${PACKAGES[@]}; do
     deploy $package
 done
 
 # Fix PATH of gifsicle
-cat > $BUILD_DIR/.profile.d/gifsicle-1.77.sh <<"EOF"
-PATH=$PATH:$HOME/vendor/gifsicle-1.77/src
-EOF
+echo 'PATH=$PATH:$HOME/vendor/gifsicle-1.77/src' > $BUILD_DIR/.profile.d/gifsicle-1.77.sh
