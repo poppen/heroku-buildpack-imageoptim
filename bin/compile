@@ -47,3 +47,4 @@ done
 export PATH="$PATH:$HOME/vendor/gifsicle-1.77/src"
 
 echo $PATH
+find $HOME
