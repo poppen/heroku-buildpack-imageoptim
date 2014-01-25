@@ -26,7 +26,7 @@ deploy() {
     PROFILE_PATH="$BUILD_DIR/.profile.d/${package}.sh"
     mkdir -p $(dirname $PROFILE_PATH)
     echo "creating $PROFILE_PATH" | indent
-    echo 'PATH=$PATH:$HOME/vendor/'"$package" >> $PROFILE_PATH
+    echo 'PATH=$PATH:$HOME/vendor/'"$package" > $PROFILE_PATH
 }
 
 for package in ${PACKAGES[@]}; do
